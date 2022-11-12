@@ -1,22 +1,20 @@
+import model.Car;
+import service.CarService;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Kolesnyk Yevhen ");
-        System.out.println();
-        System.out.println("Завдання 2");
-        for (int i = 0, y = 5; i <= 10; i++) {
-            System.out.println("Крок " + i + "," + " значення " + y);
-            y += 2;
-        }
-        System.out.println();
-        System.out.println("Завдання 3");
-        for (int i = 0; i < 10; i++) {
-            if (i == 3) {
-                continue;
-            }
-            if (i == 6) {
-                break;
-            }
-            System.out.println("Крок " + i);
-        }
+        final CarService carService = new CarService();
+
+        final Car testCar = new Car("manufacture", "engine", "color");
+        carService.print(testCar);
+
+        final Car car1 = carService.create();
+        carService.print(car1);
+
+        final Car car2 = carService.create();
+        carService.print(car2);
+
+        final Car car3 = carService.create();
+        carService.print(car3);
     }
 }
