@@ -3,26 +3,24 @@ import model.Car;
 import java.util.Random;
 
 public class CarService {
-    public Car create() {
-        return new Car(RandGeneratedStr(5), RandGeneratedStr(5), RandGeneratedStr(5));
+    public Car create(){
+        return new Car(getRandomString(), getRandomString(), getRandomString());
     }
-
-    public void print(Car car) {
+    public static void print(Car car) {
         System.out.println("Manufacturer: " + car.getManufacturer() + " Engine: " + car.getEngine() + " Color: " +
                 car.getColor() + " Count: " + car.getCount() + " Price: " + car.getPrice());
     }
+    private static String getRandomString() {
+        int lenght = 8;
+        Random random = new Random();
+        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        StringBuilder builder = new StringBuilder();
 
-        private static String RandGeneratedStr(int l) {
-            String AlphaNumericStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvxyz0123456789";
-            StringBuilder s = new StringBuilder(l);
-            int i;
-            for (i = 0; i < l; i++) {
-                int ch = (int) (AlphaNumericStr.length() * Math.random());
-                s.append(AlphaNumericStr.charAt(ch));
-            }
-
-            return s.toString();
-
+        for (int i = 0; i < lenght; i++) {
+            int index = random.nextInt(alphabet.length());
+            char randomChar = alphabet.charAt(index);
+            builder.append(randomChar);
         }
-
+        return builder.toString();
+    }
 }
