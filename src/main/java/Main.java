@@ -2,19 +2,11 @@ import model.Car;
 import service.CarService;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(final String[] arg) {
         final CarService carService = new CarService();
-
-        final Car testCar = new Car("manufacture", "engine", "color");
-        carService.print(testCar);
-
-        final Car car1 = carService.create();
-        carService.print(car1);
-
-        final Car car2 = carService.create();
-        carService.print(car2);
-
-        final Car car3 = carService.create();
-        carService.print(car3);
+        for (int i =0; i < 3; i++){
+            final Car car = carService.create();
+            carService.print(car);
+        }
     }
 }
