@@ -1,15 +1,15 @@
 package service;
 import model.Car;
+import model.Color;
+import model.Engine;
+
 import java.util.Random;
 
 public class CarService {
+    private final Random random = new Random();
 
     public Car create() {
-        String manufacturer = randomString();
-        String engine = randomString();
-        String color = randomString();
-        Car car = new Car(manufacturer, engine, color);
-        return car;
+        return new Car(randomString(), new Engine(), getRandomColor());
     }
 
     private String randomString() {
@@ -28,6 +28,25 @@ public class CarService {
     public void print(Car car) {
         System.out.println("Manufacturer: " + car.getManufacturer() + " Engine: " + car.getEngine() + " Color: " +
         car.getColor() + " Count: " + car.getCount() + " Price: " + car.getPrice());
+    }
+
+    private Color getRandomColor() {
+        Color[] values = Color.values();
+        int randomIndex = random.nextInt(values.length);
+        return values[randomIndex];
+    }
+
+
+    public void check(Car car) {
+        if(car.getCount() > 0 && car.getEngine().getPower() > 200) {
+            System.out.println("Готово к продаже");
+        } else if (car.getCount() < 1 && car.getEngine().getPower() <= 200) {
+            System.out.println("Нет машины и мощность меньше чем нужно");
+        } else if (car.getCount() < 1) {
+            System.out.println("Нет машины");
+        } else if (car.getEngine().getPower() <= 200) {
+            System.out.println("Мощность меньше 200");
+        }
     }
 }
 

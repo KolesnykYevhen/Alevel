@@ -1,12 +1,13 @@
 package model;
+
 import java.util.Random;
 import java.util.UUID;
 
 public class Car {
     private final String id;
     private String manufacturer;
-    private String engine;
-    private String color;
+    private Engine engine;
+    private Color color;
     private int count;
     private int price;
     private final Random random = new Random();
@@ -15,7 +16,7 @@ public class Car {
         this.id = UUID.randomUUID().toString();
     }
 
-    public Car(String manufacturer, String engine, String color) {
+    public Car(String manufacturer, Engine engine, Color color) {
         this.id = UUID.randomUUID().toString();
         this.manufacturer = manufacturer;
         this.engine = engine;
@@ -36,19 +37,19 @@ public class Car {
         this.manufacturer = manufacturer;
     }
 
-    public String getEngine() {
+    public Engine getEngine() {
         return engine;
     }
 
-    public void setEngine(String engine) {
+    public void setEngine(Engine engine) {
         this.engine = engine;
     }
 
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(Color color) {
         this.color = color;
     }
 

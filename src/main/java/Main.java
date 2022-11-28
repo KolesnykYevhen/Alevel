@@ -7,6 +7,7 @@ public class Main {
         for (int i =0; i < 3; i++){
             final Car car = carService.create();
             carService.print(car);
+            carService.check(car);
         }
     }
 }
