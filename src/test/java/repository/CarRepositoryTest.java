@@ -3,6 +3,7 @@ package repository;
 import model.PassengerCar;
 import model.Color;
 import model.Engine;
+import model.Type;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,7 @@ class CarRepositoryTest {
     @BeforeEach
     void setUp() {
         target = new CarRepository();
-        car = new PassengerCar("abc", new Engine("dfg"), Color.BLUE);
+        car = new PassengerCar("abc", new Engine(Type.CAR), Color.BLUE);
         target.save(car);
     }
 

@@ -1,8 +1,5 @@
 package servise;
-import model.PassengerCar;
-import model.Color;
-import model.Engine;
-import model.Truck;
+import model.*;
 import repository.CarRepository;
 import util.RandomGenerator;
 import org.junit.jupiter.api.Test;
@@ -21,7 +18,7 @@ class CarServiceTest {
         repository = Mockito.mock(CarRepository.class);
         randomGenerator = Mockito.mock(RandomGenerator.class);
         target = new CarService(repository);
-        car = new PassengerCar("abc", new Engine("dfg"), Color.BLUE);
+        car = new PassengerCar("abc", new Engine(Type.CAR), Color.BLUE);
     }
 
     @Test

@@ -1,10 +1,7 @@
 package service;
 
-import model.Car;
-import model.Color;
-import model.Engine;
-import model.PassengerCar;
-import model.Truck;
+
+import model.*;
 import repository.CarRepository;
 import util.RandomGenerator;
 
@@ -36,12 +33,12 @@ public class CarService {
     }
 
     public PassengerCar createPassengerCar() {
-        final PassengerCar car = new PassengerCar(randomText(5), new Engine(randomText(5)), Color.randomColor());
+        final PassengerCar car = new PassengerCar(randomText(5), new Engine(Type.CAR), Color.randomColor()); Color.randomColor());
         carRepository.save(car);
         return car;
     }
     public Truck createTruck() {
-        final Truck car = new Truck(randomText(5), new Engine(randomText(5)), Color.randomColor());
+        final Truck car = new Truck(randomText(5), new Engine(Type.TRUCK), Color.randomColor());
         return car;
     }
 
@@ -56,7 +53,7 @@ public class CarService {
         return numberCars;
     }
     public PassengerCar create() {
-        final PassengerCar car = new PassengerCar(randomText(5), new Engine(randomText(5)), Color.randomColor());
+        final PassengerCar car = new PassengerCar(randomText(5), new Engine(Type.randomType()), Color.randomColor());
         carRepository.save(car);
         return car;
     }
