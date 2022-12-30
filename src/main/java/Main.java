@@ -1,13 +1,11 @@
-import model.Car;
+import repository.CarRepository;
 import service.CarService;
+import util.RandomGenerator;
 
 public class Main {
-    public static void main(final String[] arg) {
-        final CarService carService = new CarService();
-        for (int i =0; i < 3; i++){
-            final Car car = carService.create();
-            carService.print(car);
-            carService.check(car);
-        }
+    public static void main(String[] args) {
+        final CarService carService = new CarService(new CarRepository());
+        final RandomGenerator rg = new RandomGenerator();
+        carService.create(rg);
     }
 }
