@@ -1,52 +1,140 @@
 package service;
+
 import model.Car;
 import model.Color;
 import model.Engine;
+import repository.CarRepository;
+import util.RandomGenerator;
 
 import java.util.Random;
 
 public class CarService {
+    public static void check(final Car car) {
+        if (car == null) {
+            System.out.println("Car is null");
+            return;
+        }
+        final boolean checkCount = car.getCount() > 0;
+        final boolean checkPower = car.getEngine().getPower() > 200;
+        if (checkCount && checkPower) {
+            System.out.println("Car is fully ready for sell.");
+            return;
+        }
+        if (!checkCount) {
+            System.out.print("Count <= 0. ");
+        }
+        if (!checkPower) {
+            System.out.println("Power <= 200.");
+        }
+    }
     private final Random random = new Random();
-
-    public Car create() {
-        return new Car(randomString(), new Engine(), getRandomColor());
+    private final CarRepository carRepository;
+    public CarService(final CarRepository carRepository) {
+        this.carRepository = carRepository;
     }
 
-    private String randomString() {
-        String symbols = "abcdefghijklmnopqrstuvwxyz";
-        Random random = new Random();
-        StringBuilder sb = new StringBuilder();
-        int length = 7;
-        for (int i = 0; i < length; i++) {
-            int index = random.nextInt(symbols.length());
-            char randomChar = symbols.charAt(index);
-            sb.append(randomChar);
+    public int create(RandomGenerator randomGenerator) {
+        final int numberCars = randomGenerator.randomGenerator();
+        if (numberCars <= 0 || numberCars > 10) {
+            return -1;
+        }
+        final Car[] cars = create(numberCars);
+        printAll(cars);
+        System.out.println("Number of created cars: " + numberCars);
+        return numberCars;
+    }
+    public Car create() {
+        final Car car = new Car(randomText(5), new Engine(randomText(5)), Color.randomColor());
+        carRepository.save(car);
+        return car;
+    }
+    public Car[] create(final int numberOfCars) {
+        if (numberOfCars < 0) {
+            return new Car[0];
+        }
+        Car[] cars = new Car[numberOfCars];
+        for (int i = 0; i < numberOfCars; i++) {
+            cars[i] = create();
+        }
+        return cars;
+    }
+    public void insert(Car car, int indexInsertCar) {
+        carRepository.insert(car, indexInsertCar);
+    }
+    public void insert(int indexInsertCar) {
+        carRepository.insert(create(), indexInsertCar);
+    }
+    public void print(final Car car) {
+        if (car == null) {
+            return;
+        }
+        if (car.getManufacturer() != null) {
+            System.out.print("Manufacturer: " + car.getManufacturer() + ". ");
+        }
+        if (car.getEngine() != null) {
+            System.out.print("Engine: type - " + car.getEngine().getType() +
+                    ", power - " + car.getEngine().getPower() + ". ");
+        }
+        if (car.getColor() != null) {
+            System.out.print("Color: " + car.getColor() + ". ");
+        }
+        if (car.getCount() >= 0) {
+            System.out.print("Count: " + car.getCount() + ". ");
+        }
+        if (car.getPrice() >= 0) {
+            System.out.print("Price: " + car.getPrice() + ". ");
+        }
+        if (car.getUuidOfCar() != null) {
+            System.out.print("UUID: " + car.getUuidOfCar() + ". ");
+        }
+        System.out.println();
+    }
+
+    public void printByUuid(String uuidOfCar) {
+        final Car car = carRepository.getByUuid(uuidOfCar);
+        if (car == null) {
+            return;
+        }
+        print(car);
+    }
+    public void printAll() {
+        for (Car car : carRepository.getAll()) {
+            print(car);
+        }
+    }
+
+    public void printAll(Car[] cars) {
+        if (cars == null) {
+            return;
+        }
+        for (Car car : cars) {
+            print(car);
+        }
+    }
+    public void updateColor(final String uuidOfCar, final Color color) {
+        carRepository.updateColor(uuidOfCar, color);
+    }
+
+    public void updateColorRandom(final String uuidOfCar) {
+        carRepository.updateColorRandom(uuidOfCar);
+    }
+
+    public void updatePrice(final String uuidOfCar, final int price) {
+        if (price < 0) {
+            return;
+        }
+        carRepository.updatePrice(uuidOfCar, price);
+    }
+
+    public void deleteByUuid(final String uuidOfCar) {
+        carRepository.deleteByUuid(uuidOfCar);
+    }
+    private String randomText ( final int lengthRandomText){
+        String abc = "abcdefghijklmnopqrstuvwxyz";
+        StringBuilder sb = new StringBuilder("");
+        for (int i = 0; i < lengthRandomText; i++) {
+            sb.append(abc.charAt(random.nextInt(abc.length() - 1)));
         }
         return sb.toString();
     }
-
-    public void print(Car car) {
-        System.out.println("Manufacturer: " + car.getManufacturer() + " Engine: " + car.getEngine() + " Color: " +
-        car.getColor() + " Count: " + car.getCount() + " Price: " + car.getPrice());
-    }
-
-    private Color getRandomColor() {
-        Color[] values = Color.values();
-        int randomIndex = random.nextInt(values.length);
-        return values[randomIndex];
-    }
-
-
-    public void check(Car car) {
-        if(car.getCount() > 0 && car.getEngine().getPower() > 200) {
-            System.out.println("Готово к продаже");
-        } else if (car.getCount() < 1 && car.getEngine().getPower() <= 200) {
-            System.out.println("Нет машины и мощность меньше чем нужно");
-        } else if (car.getCount() < 1) {
-            System.out.println("Нет машины");
-        } else if (car.getEngine().getPower() <= 200) {
-            System.out.println("Мощность меньше 200");
-        }
-    }
 }
-
